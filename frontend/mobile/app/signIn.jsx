@@ -55,8 +55,9 @@ const SignIn = () => {
 						</View>
 						<Link className="text-xs text-right text-gray-500" href='forgetPassword'>Forget Password?</Link>
 					</View>
+					
 					<Button
-						className="bg-[#045883]"
+						className="bg-[#045883] w-full"
 					>
 						<Text className="text-white font-bold">Login</Text>
 					</Button>
@@ -80,8 +81,8 @@ const SignIn = () => {
 					
 				</View>
 				<View className="mt-8 mb-4 flex-row justify-center items-center gap-2">
-					<Text className="text-xs text-center text-gray-500">Don't have an account?</Text>
-					<Link className='text-xs text-center text-[#045883] font-semibold' href='/signUp'>Sign Up</Link>
+					<Text className="text-sm text-center text-gray-500">Don't have an account?</Text>
+					<Link className='text-sm text-center text-[#045883] font-semibold' href='/signUp'>Sign Up</Link>
 				</View>
 				
 			</View>

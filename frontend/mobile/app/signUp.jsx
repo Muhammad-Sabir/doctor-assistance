@@ -70,7 +70,7 @@ const SignUp = () => {
 						</View>
 					</View>
 					<Button
-						className="bg-[#045883]"
+						className="bg-[#045883] mt-2 w-full"
 					>
 						<Text className="text-white font-bold">Sign Up</Text>
 					</Button>
@@ -94,8 +94,8 @@ const SignUp = () => {
 					
 				</View>
 				<View className="mt-8 flex-row justify-center items-center gap-2 mb-4">
-					<Text className="text-xs text-center text-gray-500">Already have an account?</Text>
-					<Link className='text-xs text-center text-[#045883] font-semibold' href='/signIn'>Login</Link>
+					<Text className="text-sm text-center text-gray-500">Already have an account?</Text>
+					<Link className='text-sm text-center text-[#045883] font-semibold' href='/signIn'>Login</Link>
 				</View>
 				
 			</View>
