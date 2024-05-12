@@ -1,5 +1,16 @@
-import { Slot } from "expo-router";
+import { Slot, Stack } from "expo-router";
 
 import "../global.css"
 
-export default Slot
+const MainLayout = () => {
+    return (
+        <Stack>
+            <Stack.Screen name="signIn" options={{headerShown: false}}/>
+            <Stack.Screen name="index" options={{headerShown: false}}/>
+            <Stack.Screen name="signUp" />
+        </Stack>
+    )
+}
+
+
+export default MainLayout
