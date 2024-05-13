@@ -1,16 +1,34 @@
-import React from 'react';
-import { View, Text, SafeAreaView, Image, TextInput} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, SafeAreaView, Image, TextInput, Alert} from 'react-native';
 import Button from "../components/Button"
 import { Link} from 'expo-router';
 import GoogleLogo from '../assets/images/SVG/GoogleLogo';
 import { FontAwesome } from '@expo/vector-icons';
 import CustomKeyboardView from "../components/CustomKeyboardView"
+import { useAuthContext } from '../contexts/AuthContext';
 
 const SignUp = () => {
+	const {register} = useAuthContext();
+	const [user, setUser] = useState({
+		name:"",
+		email:"",
+		phoneNo: "",
+		password: ""
+	})
+
 	const [activeTab, setActiveTab] = React.useState('Patient');
 	const handleTabChange = (tab) => {
 		setActiveTab(tab);
 	};
+
+	const handleSignUp = () => {
+		if (user.email === ""  || user.password === "" || user.name === "") {
+			Alert.alert("Empty Fields", "Please fill all the fields")
+			return 
+		}
+
+		register(user.name, user.email, activeTab)
+	}
 
 	return (
 		<CustomKeyboardView>
@@ -40,6 +58,8 @@ const SignUp = () => {
 							<TextInput
 								className="w-full py-2 px-2 rounded-lg border border-gray-300 text-sm"
 								placeholder="Enter your name"
+								value={user.name}
+								onChangeText={value => setUser(prev => ({...prev, name: value}))}
 							/>
 						</View>
 
@@ -48,15 +68,8 @@ const SignUp = () => {
 							<TextInput
 								className="w-full py-2 px-2 rounded-lg border border-gray-300 text-sm"
 								placeholder="Enter your email"
-							/>
-						</View>
-
-						<View className="gap-2">
-							<Text className="text-black text-sm">Password</Text>
-							<TextInput
-								className="w-full py-2 px-2 rounded-lg border border-gray-300 text-sm"
-								placeholder="Enter your password"
-								secureTextEntry={true}
+								value={user.email}
+								onChangeText={value => setUser(prev => ({...prev, email: value}))}
 							/>
 						</View>
 
@@ -66,11 +79,27 @@ const SignUp = () => {
 								className="w-full py-2 px-2 rounded-lg border border-gray-300 text-sm"
 								placeholder="Enter your Phone Number"
 								inputMode='tel'
+								value={user.phoneNo}
+								onChangeText={value => setUser(prev => ({...prev, phoneNo: value}))}
 							/>
 						</View>
+
+						<View className="gap-2">
+							<Text className="text-black text-sm">Password</Text>
+							<TextInput
+								className="w-full py-2 px-2 rounded-lg border border-gray-300 text-sm"
+								placeholder="Enter your password"
+								secureTextEntry={true}
+								autoCapitalize='none'
+								value={user.password}
+								onChangeText={value => setUser(prev => ({...prev, password: value}))}
+							/>
+						</View>
+
 					</View>
 					<Button
 						className="bg-[#045883] mt-2 w-full"
+						onPress= {handleSignUp}
 					>
 						<Text className="text-white font-bold">Sign Up</Text>
 					</Button>
