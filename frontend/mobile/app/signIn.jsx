@@ -1,17 +1,34 @@
 import React from 'react';
-import { View, Text, SafeAreaView, Image, TextInput} from 'react-native';
+import { View, Text, SafeAreaView, Image, TextInput, Alert} from 'react-native';
 import Button from "../components/Button"
 import { Link} from 'expo-router';
 import GoogleLogo from '../assets/images/SVG/GoogleLogo';
 import { FontAwesome } from '@expo/vector-icons';
 import CustomKeyboardView from '../components/CustomKeyboardView';
+import { useState } from 'react';
+import { useAuthContext } from '../contexts/AuthContext';
 
 
 const SignIn = () => {
-	const [activeTab, setActiveTab] = React.useState('Patient');
+	const {login} = useAuthContext()
+	const [activeTab, setActiveTab] = useState('Patient');
+	const [user, setUser] = useState({
+		email: "",
+		password: ""
+	})
 	const handleTabChange = (tab) => {
 		setActiveTab(tab);
 	};
+
+	const handleLoginIn = () => {
+		if (user.email === ""  || user.password === "") {
+			Alert.alert("Login", "Please fill all the fields")
+			return 
+		}
+
+		login("doctor", "doctor")
+		// login(user.email, user.password)
+	}
 
 	return (
 		<CustomKeyboardView>
@@ -42,6 +59,8 @@ const SignIn = () => {
 							<TextInput
 								className="w-full py-2 px-2 rounded-lg border border-gray-300 text-sm"
 								placeholder="Enter your email"
+								value={user.email}
+								onChangeText={value => setUser(prev => ({...prev, email: value}))}
 							/>
 						</View>
 
@@ -51,6 +70,8 @@ const SignIn = () => {
 								className="w-full py-2 px-2 rounded-lg border border-gray-300 text-sm"
 								placeholder="Enter your password"
 								secureTextEntry={true}
+								value={user.password}
+								onChangeText={value => setUser(prev => ({...prev, password: value}))}
 							/>
 						</View>
 						<Link className="text-xs text-right text-gray-500" href='forgetPassword'>Forget Password?</Link>
@@ -58,6 +79,7 @@ const SignIn = () => {
 					
 					<Button
 						className="bg-[#045883] w-full"
+						onPress={handleLoginIn}
 					>
 						<Text className="text-white font-bold">Login</Text>
 					</Button>
