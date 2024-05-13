@@ -14,6 +14,7 @@ const MainLayout = () => {
         console.log("segements:", segments, userAuthentication.isAuthenticated)
         currentTab = segments[0] === '(doctor)' || segments[0] === '(patient)'  
         if (!currentTab && userAuthentication.isAuthenticated) {
+            router.dismissAll()
             if (userAuthentication.role === Role.PATIENT) {
                 router.replace('(patient)')
             } else {
