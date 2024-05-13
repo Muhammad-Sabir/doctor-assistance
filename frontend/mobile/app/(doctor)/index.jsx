@@ -3,8 +3,8 @@ import React from 'react'
 
 const index = () => {
   return (
-    <View>
-      <Text>doctor</Text>
+    <View className="w-full bg-[#dadbdc]">
+      <Text >doctor Home</Text>
     </View>
   )
 }
