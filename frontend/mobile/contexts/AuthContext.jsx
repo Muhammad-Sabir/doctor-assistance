@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 
 
 export const AuthProvider = ({children})=> {
+    
     const [userAuthentication, setUserAuthentication] =  useState({
         role: Role.PATIENT,
         email: null,
@@ -23,7 +24,22 @@ export const AuthProvider = ({children})=> {
     }
 
     const register = async(username, email, role) => {
-        setUserAuthentication((prev)=> ({...prev, isAuthenticated: true, role: role, email: email}))
+        console.log("register called");
+        fetch("http://10.0.2.2:8000/api/user/create/", {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "phone": "885678912",
+            "email": "88889abc@gmail.com",
+            "password": "dasbasjdbaskjd",
+            "name": "88889abc example",
+            "is_doctor": false
+        })
+    })
+        // setUserAuthentication((prev)=> ({...prev, isAuthenticated: true, role: role, email: email}))
     }
     
     const logout = async() => {
