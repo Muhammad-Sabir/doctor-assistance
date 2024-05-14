@@ -95,12 +95,26 @@ class DoctorDegree(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     degree = models.ForeignKey(Degree, on_delete=models.CASCADE)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["doctor", "degree"], name="unique_doctor_degree"
+            )
+        ]
+
 
 class DoctorSpecialization(models.Model):
     """Junction table between Doctor and Specialization."""
 
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     specialization = models.ForeignKey(Specialization, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["doctor", "specialization"], name="unique_doctor_specialization"
+            )
+        ]
 
 
 class Patient(models.Model):
