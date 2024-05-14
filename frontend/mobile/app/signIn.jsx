@@ -13,7 +13,7 @@ const SignIn = () => {
 	const {login} = useAuthContext()
 	const [activeTab, setActiveTab] = useState('Patient');
 	const [user, setUser] = useState({
-		email: "",
+		phone: "",
 		password: ""
 	})
 	const handleTabChange = (tab) => {
@@ -21,13 +21,20 @@ const SignIn = () => {
 	};
 
 	const handleLoginIn = () => {
-		if (user.email === ""  || user.password === "") {
+		if (user.phone === ""  || user.password === "") {
 			Alert.alert("Login", "Please fill all the fields")
 			return 
 		}
 
-		login("patient", "patient")
-		// login(user.email, user.password)
+		// login("patient", "patient")
+		login(user.phone, user.password, activeTab, (success, error)=> {
+			if (error) {
+				console.error("Login System Error:", error);
+				Alert.alert("Login Failed", "An error occurred while signing. Please try again later.");
+			} else if (!success) {
+				Alert.alert("Login Failed", "You are not registered either check your phoneNo or password.");
+			}
+		})
 	}
 
 	return (
@@ -55,12 +62,13 @@ const SignIn = () => {
 							</Button>
 						</View>
 						<View className="gap-2">
-							<Text className="text-black text-sm">Email address</Text>
+							<Text className="text-black text-sm">Phone No</Text>
 							<TextInput
 								className="w-full py-2 px-2 rounded-lg border border-gray-300 text-sm"
-								placeholder="Enter your email"
-								value={user.email}
-								onChangeText={value => setUser(prev => ({...prev, email: value}))}
+								placeholder="Enter your phoneNo"
+								value={user.phone}
+								onChangeText={value => setUser(prev => ({...prev, phone: value}))}
+								inputMode='tel'
 							/>
 						</View>
 

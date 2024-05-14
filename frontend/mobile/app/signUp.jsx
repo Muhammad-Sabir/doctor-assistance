@@ -21,13 +21,21 @@ const SignUp = () => {
 		setActiveTab(tab);
 	};
 
-	const handleSignUp = () => {
+	const handleSignUp = async () => {
 		if (user.email === ""  || user.password === "" || user.name === "") {
 			Alert.alert("Empty Fields", "Please fill all the fields")
 			return 
 		}
 
-		register(user.name, user.email, activeTab)
+		
+		register(user.name, user.email, user.phoneNo, user.password, activeTab, (success, error) => {
+			if (!success && error) {
+				console.error("Registration Error:", error);
+				Alert.alert("Registration Failed", "An error occurred while registering. Please try again later.");
+			} else if (!success) {
+				Alert.alert("Registration Failed", "Email/phone is already registered. Please use a different email/phone.");
+			}
+		});
 	}
 
 	return (

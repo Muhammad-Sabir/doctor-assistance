@@ -9,37 +9,69 @@ export const AuthContext = createContext();
 export const AuthProvider = ({children})=> {
     
     const [userAuthentication, setUserAuthentication] =  useState({
+        name: "",
         role: Role.PATIENT,
-        email: null,
-        isAuthenticated: undefined
+        isAuthenticated: undefined,
+        token: null
     })
 
     // api calling for handling login
-    const login = async (email, password) => {
-        if (email === 'doctor' && password === 'doctor') {
-            setUserAuthentication((prev)=> ({...prev, email: email, isAuthenticated: true, role: Role.DOCTOR}))
-        } else if (email === 'patient' && password === 'patient') {
-            setUserAuthentication((prev)=> ({...prev, email: email, isAuthenticated: true, role: Role.PATIENT}))
+    const login = async (phone, password, role, callback) => {
+        try {
+            const response = await fetch("http://10.0.2.2:8000/api/user/token/", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    phone,
+                    password,
+                })
+            })
+            
+            const responseData = await response.json()    
+            console.log(responseData)
+            if (responseData.hasOwnProperty("token")) {
+                setUserAuthentication((prev)=> ({...prev, isAuthenticated: true, role: role, name: "Test", token: responseData['token']}))
+                callback(true, null)
+            }  else {
+                callback(false, null)
+            }
+        } catch(err) {
+            console.log( "Error faced at register:", err)
+            callback(false, err)
         }
     }
-
-    const register = async(username, email, role) => {
+    const register = async(name, email, phone, password, role, callback) => {
         console.log("register called");
-        fetch("http://10.0.2.2:8000/api/user/create/", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            "phone": "885678912",
-            "email": "88889abc@gmail.com",
-            "password": "dasbasjdbaskjd",
-            "name": "88889abc example",
-            "is_doctor": false
-        })
-    })
-        // setUserAuthentication((prev)=> ({...prev, isAuthenticated: true, role: role, email: email}))
+        try {
+            const response = await fetch("http://10.0.2.2:8000/api/user/create/", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    phone,
+                    email,
+                    password,
+                    name,
+                    "is_doctor": role === Role.DOCTOR
+                })
+            })
+            const responseData = await response.json()
+            console.log(responseData)
+            if (Object.keys(responseData).length > 2) {
+                setUserAuthentication((prev)=> ({...prev, isAuthenticated: true, role: role, name: name}))
+                callback(true, null)
+            } else {
+                callback(false, null)
+            }
+        } catch(err) {
+            console.log("Error faced at register:", err)
+            callback(false, err)
+        }
     }
     
     const logout = async() => {
