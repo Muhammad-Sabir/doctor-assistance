@@ -26,7 +26,7 @@ const SignIn = () => {
 			return 
 		}
 
-		login("doctor", "doctor")
+		login("patient", "patient")
 		// login(user.email, user.password)
 	}
 
