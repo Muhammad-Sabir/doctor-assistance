@@ -24,6 +24,7 @@ export const AuthProvider = ({children})=> {
     }
 
     const register = async(username, email, role) => {
+        console.log("register called");
         fetch("http://10.0.2.2:8000/api/user/create/", {
         method: "POST",
         headers: {
@@ -31,11 +32,11 @@ export const AuthProvider = ({children})=> {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "phone": "12345678912",
-            "email": "abc@gmail.com",
+            "phone": "885678912",
+            "email": "88889abc@gmail.com",
             "password": "dasbasjdbaskjd",
-            "name": "abc example",
-            "is_doctor": true
+            "name": "88889abc example",
+            "is_doctor": false
         })
     })
         // setUserAuthentication((prev)=> ({...prev, isAuthenticated: true, role: role, email: email}))
