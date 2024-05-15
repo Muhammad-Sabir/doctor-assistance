@@ -4,10 +4,10 @@ import { View, Image, TouchableOpacity} from 'react-native';
 
 const Slider = () => {
     const images = [
-        require('../assets/images/doc-banner-2.png'),
-        require('../assets/images/doc-banner-1.png'),
-        require('../assets/images/doc-banner-3.png'),
-        require('../assets/images/doc-banner-4.png')
+        require('../assets/images/doc-banner-2.jpg'),
+        require('../assets/images/doc-banner-1.jpg'),
+        require('../assets/images/doc-banner-3.jpg'),
+        require('../assets/images/doc-banner-4.jpg')
     ];
     const [currentIndex, setCurrentIndex] = useState(0);
 
