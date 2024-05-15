@@ -27,12 +27,12 @@ const SignIn = () => {
 		}
 
 		// login("patient", "patient")
-		login(user.phone, user.password, activeTab, (success, error)=> {
+		login(user.phone, user.password, activeTab, (success, error, message)=> {
 			if (error) {
 				console.error("Login System Error:", error);
-				Alert.alert("Login Failed", "An error occurred while signing. Please try again later.");
+				Alert.alert("Login Failed", message);
 			} else if (!success) {
-				Alert.alert("Login Failed", "You are not registered either check your phoneNo or password.");
+				Alert.alert("Login Failed", message);
 			}
 		})
 	}

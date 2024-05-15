@@ -5,9 +5,10 @@ import SearchBar from '../../components/SearchBar';
 import Slider from '../../components/Slider';
 import SpecialityList from '../../components/SpecialityList';
 import DoctorList from '../../components/DoctorList';
+import {useUserContext } from '../../contexts/UserContext';
 
 const index = () => {
-
+  const {userDetails} = useUserContext()
   return (
     <ScrollView className="bg-white">
 
@@ -19,7 +20,7 @@ const index = () => {
           </View>
           <View className="ml-4">
             <Text className="text-black text-md">Welcome</Text>
-            <Text className="text-md font-bold text-[#045883]">Fatima Iqbal</Text>
+            <Text className="text-md font-bold text-[#045883]">{userDetails['name'] || "Fatima Iqbal"}</Text>
           </View>
         </View>
         <Ionicons size={28} name="notifications-outline" color='black' />

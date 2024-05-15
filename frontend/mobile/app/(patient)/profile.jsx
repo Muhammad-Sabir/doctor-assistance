@@ -2,9 +2,13 @@ import React from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { AntDesign, Feather, FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
+import { useUserContext } from '../../contexts/UserContext'
+import { useAuthContext } from '../../contexts/AuthContext'
 
 const profile = () => {
   const router = useRouter();
+  const {userDetails} = useUserContext();
+  const {logout} = useAuthContext();
 
   const data = {
     name: 'Daniyal Khan',
@@ -28,7 +32,7 @@ const profile = () => {
   };
 
   const handleLogout = () => {
-   //logout logic
+    logout();
   };
 
 
@@ -45,11 +49,11 @@ const profile = () => {
           />
         </View>
         <View className="items-center">
-          <Text className="text-lg font-bold text-[#045883] mb-1 ">{data.name}</Text>
+          <Text className="text-lg font-bold text-[#045883] mb-1 ">{userDetails['name'] || data.name}</Text>
           <View className="bg-[#e2e3e4] py-2 px-3 rounded-md mb-1">
-            <Text className="text-base text-[#045883]">{data.email}</Text>
+            <Text className="text-base text-[#045883]">{userDetails['email'] || data.email}</Text>
           </View>
-          <Text className="text-base text-gray-500">{data.phone}</Text>
+          <Text className="text-base text-gray-500">{userDetails['phone'] ||data.phone}</Text>
         </View>
       </View>
 

@@ -4,9 +4,18 @@ import { Tabs } from 'expo-router';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router'
 import { Platform } from 'react-native';
+import { useUserContext, UserContextProvider } from '../../contexts/UserContext';
+import { useEffect } from 'react';
+import { useAuthContext } from '../../contexts/AuthContext';
 
-const _layout = () => {
+const PatientTab = () => {
   const router = useRouter();
+  const {initializeData} = useUserContext();
+  const {userAuthentication} = useAuthContext()
+
+  useEffect(()=> {
+    initializeData(userAuthentication['token'])
+  }, [])
 
   return (
     <Tabs screenOptions={{
@@ -104,4 +113,12 @@ const _layout = () => {
   )
 }
 
-export default _layout
+
+const PatientLayout = ()=> {
+  return (
+    <UserContextProvider>
+      <PatientTab/>
+    </UserContextProvider>
+  )
+}
+export default PatientLayout

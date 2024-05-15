@@ -7,9 +7,11 @@ import statsData from '../../assets/data/statsData.js';
 import ConsultationCard from '../../components/ConsultationCard.jsx';
 import consultationData from '../../assets/data/consultationData.js';
 import { useAuthContext } from '../../contexts/AuthContext.jsx';
+import { useUserContext } from '../../contexts/UserContext.jsx';
 
 const index = () => {
   const {userAuthentication} = useAuthContext();
+  const {userDetails} = useUserContext()
   return (
     <ScrollView>
 
@@ -19,7 +21,7 @@ const index = () => {
           <Image source={require("../../assets/images/doctorpic.jpg")} className="w-20 h-20 rounded-full" />
           <View className="ml-4">
             <Text className="text-black text-sm">Welcome Dr</Text>
-            <Text className="text-md font-bold text-[#045883]">Dr. {userAuthentication.name || "Saad Hassan"}</Text>
+            <Text className="text-md font-bold text-[#045883]">Dr. {userDetails['name'] || "Saad Hassan"}</Text>
           </View>
         </View>
         <Ionicons size={28} name="notifications-outline" color='black' />

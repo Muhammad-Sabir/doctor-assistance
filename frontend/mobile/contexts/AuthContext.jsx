@@ -33,14 +33,30 @@ export const AuthProvider = ({children})=> {
             const responseData = await response.json()    
             console.log(responseData)
             if (responseData.hasOwnProperty("token")) {
-                setUserAuthentication((prev)=> ({...prev, isAuthenticated: true, role: role, name: "Test", token: responseData['token']}))
-                callback(true, null)
+                const userDetails = await fetch("http://10.0.2.2:8000/api/user/me", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Token ${responseData['token']}`,
+                        "Content-Type": "application/json"
+                    }
+                })
+                const user = await userDetails.json()
+                const isDoctor = user["is_doctor"]
+                
+                const userResponse = role === Role.DOCTOR;
+                if (userResponse === isDoctor) {
+                    setUserAuthentication((prev)=> ({...prev, isAuthenticated: true, role: role, name: user['name'], token: responseData['token']}))
+                } else {
+                    callback(false, null, "please select switch the current tab user")
+                }
+
+                callback(true, null, "")
             }  else {
-                callback(false, null)
+                callback(false, null, "You are not registered either check your phoneNo or password.")
             }
         } catch(err) {
             console.log( "Error faced at register:", err)
-            callback(false, err)
+            callback(false, err, "An error occurred while signing. Please try again later.")
         }
     }
     const register = async(name, email, phone, password, role, callback) => {
@@ -75,7 +91,7 @@ export const AuthProvider = ({children})=> {
     }
     
     const logout = async() => {
-        setUserAuthentication((prev)=> ({...prev, isAuthenticated: false}))
+        setUserAuthentication((prev)=> ({...prev, isAuthenticated: false, token: null}))
     }
 
     return (
