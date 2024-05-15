@@ -26,7 +26,7 @@ const Slider = () => {
             </TouchableOpacity>
 
             <View className="flex flex-col items-center mt-3 mb-3">
-                <Image source={images[currentIndex]} className="h-[20vh] w-[80vw] object-contain" />
+                <Image source={images[currentIndex]} className="h-[20vh] w-[80vw]" />
             </View>
 
             <TouchableOpacity onPress={handleNext} className="p-4">

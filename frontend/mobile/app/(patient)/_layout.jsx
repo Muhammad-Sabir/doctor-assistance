@@ -1,9 +1,13 @@
 import React from 'react'
-import { FontAwesome, FontAwesome5, FontAwesome6, Ionicons } from '@expo/vector-icons';
+import { FontAwesome6, Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router'
+import { Platform } from 'react-native';
 
 const _layout = () => {
+  const router = useRouter();
+
   return (
     <Tabs screenOptions={{
       tabBarShowLabel: false, headerShown: false,
@@ -72,6 +76,28 @@ const _layout = () => {
               </View>
             )
           }
+        }}
+      />
+
+      <Tabs.Screen
+        name="editprofile"
+        options={{
+          headerShown: true,
+          headerTitle: 'Edit Profile',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: '#045883',
+            fontSize: 18,
+          },
+          headerStyle: {
+            shadowColor: Platform.OS === 'android' ? 'rgba(0,0,0,0.9)' : undefined,
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.push("(patient)/profile")}>
+              <Ionicons name="arrow-back" size={24} color="gray" className='ml-4' />
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null
         }}
       />
     </Tabs>
